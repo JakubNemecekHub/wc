@@ -29,7 +29,7 @@ void print(Count result, Flags flags)
     if ( flags.lines || !flags.any() ) std::cout << result.lines      << ' ';
     if ( flags.words || !flags.any() ) std::cout << result.words      << ' ';
     if ( flags.bytes || !flags.any() ) std::cout << result.bytes      << ' ';
-    if ( flags.characters )           std::cout << result.characters << ' ';
+    if ( flags.characters )            std::cout << result.characters << ' ';
 }
 
 int main(int argc, char* argv[])
@@ -96,6 +96,7 @@ int main(int argc, char* argv[])
             std::cout << file << '\n';
         }
         if ( files.size() > 1 ) print(total_result, flags);
+        std::cout << "total";
     }
     catch (std::logic_error& e)
     {
