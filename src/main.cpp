@@ -72,6 +72,8 @@ int main(int argc, char* argv[])
     Count total_result {0, 0, 0, 0};
     Count result       {0, 0, 0, 0};
 
+    std::vector<std::string> errs;
+
     try
     {
         // files
@@ -81,22 +83,26 @@ int main(int argc, char* argv[])
             fs::path file_path { file };
             if( !fs::exists(file_path) )
             {
-                std::cerr << "File " << fs::absolute(file_path) << " does not exists.";
-                exit(1);
+                errs.push_back("File " + fs::absolute(file_path).string() + " does not exists.");
+                continue;;
             }
             std::ifstream file_stream { file_path, std::ios::binary };
             if(!file_stream.is_open())
             {
-                std::cerr << "Error: Could not open the file " << fs::absolute(file_path) << std::endl;
-                exit(1);
+                errs.push_back("Could not open the file " + fs::absolute(file_path).string() + "." );
+                continue;
             }
             result = wc(file_stream);
             if ( files.size() > 1 ) total_result += result;
             print(result, flags);
             std::cout << file << '\n';
         }
-        if ( files.size() > 1 ) print(total_result, flags);
-        std::cout << "total";
+        if ( files.size() > 1 )
+        {
+            print(total_result, flags);
+            std::cout << "total\n";
+        }
+        for (const auto& err : errs ) std::cout << "\n" << err << '\n';
     }
     catch (std::logic_error& e)
     {
