@@ -43,13 +43,33 @@ int main(int argc, char* argv[])
         std::cerr << program;
         return 0;
     }
-
-    std::string file { program.get<std::string>("file") };
-
     bool any_flag { program.is_used("-l") || program.is_used("-w") || program.is_used("-c") || program.is_used("-m") };
 
-    Count result { count(file) };
-    std::cout << "Carry on...\n";
+    Count result {0, 0, 0, 0};
+    std::string file { program.get<std::string>("file") };
+    if ( file.empty() )
+    {
+        // std::cin
+        result = wc(std::cin);
+    }
+    else
+    {
+        // file
+        fs::path file_path { file };
+        if( !fs::exists(file_path) )
+        {
+            std::cerr << "File " << fs::absolute(file_path) << " does not exists.";
+            exit(1);
+        }
+        std::ifstream file { file_path, std::ios::binary };
+        if(!file.is_open())
+        {
+            std::cerr << "Error: Could not open the file " << fs::absolute(file_path) << std::endl;
+            exit(1);
+        }
+        result = wc(file);
+    }
+
     if (program["-l"] == true || !any_flag) std::cout << result.lines << ' ';
     if (program["-w"] == true || !any_flag) std::cout << result.words << ' ';
     if (program["-c"] == true || !any_flag) std::cout << result.bytes << ' ';
