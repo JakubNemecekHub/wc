@@ -9,6 +9,21 @@ struct Count
     int words;
     int bytes;
     int characters;
+
+    Count& operator+=(const Count& rhs)
+    {
+        lines += rhs.lines;
+        words += rhs.words;
+        bytes += rhs.bytes;
+        characters += rhs.characters;
+        return *this;
+    }
+
+    friend Count operator+(Count lhs, const Count& rhs)
+    {
+        lhs += rhs;
+        return lhs;
+    }
 };
 
 Count wc(std::istream& in)
