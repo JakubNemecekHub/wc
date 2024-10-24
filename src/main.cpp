@@ -35,7 +35,7 @@ void print(Count result, Flags flags)
 int main(int argc, char* argv[])
 {
 
-    argparse::ArgumentParser program("wc", "0.0.1");
+    argparse::ArgumentParser program("wc", "1.0.0");
 
     // Optional arguments - flags.
     program.add_argument("-c")
