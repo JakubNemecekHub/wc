@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
     {
         std::cerr << e.what() << '\n';
         std::cerr << program;
-        return 0;
+        return 1;
     }
 
     Flags flags { program.get<bool>("-l"), program.get<bool>("-w"),
