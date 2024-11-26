@@ -25,7 +25,6 @@ struct Flags
 
 void print(Count result, Flags flags)
 {
-    bool any { flags.lines || flags.words || flags.bytes || flags.characters};
     if ( flags.lines || !flags.any() ) std::cout << result.lines      << ' ';
     if ( flags.words || !flags.any() ) std::cout << result.words      << ' ';
     if ( flags.bytes || !flags.any() ) std::cout << result.bytes      << ' ';
